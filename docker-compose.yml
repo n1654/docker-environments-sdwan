@@ -11,8 +11,8 @@ services:
       - "60022:22"
     tty: true
     networks:
-      sdwan:
-        ipv4_address: 172.32.0.121
+      default:
+        ipv4_address: 172.20.0.121
     hostname: site_A
   
   site_b:
@@ -24,8 +24,8 @@ services:
       - "60122:22"
     tty: true
     networks:
-      sdwan:
-        ipv4_address: 172.32.0.122
+      default:
+        ipv4_address: 172.20.0.122
     hostname: site_B
   
   site_c:
@@ -37,12 +37,12 @@ services:
       - "60222:22"
     tty: true
     networks:
-      sdwan:
-        ipv4_address: 172.32.0.123
+      default:
+        ipv4_address: 172.20.0.123
     hostname: site_C
 
 networks:
-  sdwan:
+  default:
     ipam:
       config:
-        - subnet: 172.32.0.0/24
+        - subnet: 172.20.0.0/24
