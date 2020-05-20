@@ -1,9 +1,10 @@
 # [Sandbox] SDWAN LAB
 
-Sandbox environment intended to be base environment for further development.
+Sandbox environment intended to be base environment for further development:
   - site_A - HUB (headquarter)
   - site_B - branch (remote office)
   - site_C - branch (remote office)
+  - site_N - scalig-out (remote office)
   - underlay network: 172.20.0.0/24 - eth0 interfaces
   - overlay network: IPsec
 
@@ -45,14 +46,19 @@ Sandbox environment intended to be base environment for further development.
 
 ## Site_A (HUB) configuration
 
-ssh root@172.20.0.121
+**Login to machine**
+```sh
+$ ssh root@172.20.0.121
+```
 
-1) Configure Loopback IP address - local=left network:
-ifconfig lo:0 192.168.55.1 netmask 255.255.255.255 up
+**Configure Loopback IP address - local=left network:**
+```sh
+# ifconfig lo:0 192.168.55.1 netmask 255.255.255.255 up
+```
 
-2) IPsec configuration
+**IPsec configuration**
 /etc/ipsec.conf
-
+```js
 conn %default                                         
       ikelifetime=1440m                               
       keylife=60m                                     
@@ -92,26 +98,33 @@ conn b_to_site
 conn c_to_site
      also=a_c  
      leftsubnet=192.168.55.0/24
+```
 
-3) IPsec secretes
+**IPsec secretes**
 /etc/ipsec.secrets
-
+```js
 172.20.0.122 172.20.0.121 : PSK passw0rd
 172.20.0.123 172.20.0.121 : PSK passw0rd
+```
 
-4) Run IPsec
-
-ipsec start
-
+**Run IPsec**
+```sh
+# ipsec start
+```
 ## Site_B (Branch) configuration
 
-ssh root@172.20.0.122
+**Login to machine**
+```sh
+$ ssh root@172.20.0.122
+```
+**Configure Loopback IP address - local=left network:**
+```sh
+# ifconfig lo:0 192.168.55.2 netmask 255.255.255.255 up
+```
 
-1) Configure Loopback IP address - local=left network:
-fconfig lo:0 192.168.55.2 netmask 255.255.255.255 up
-
-2) IPsec configuration
+**IPsec configuration**
 /etc/ipsec.conf
+```js
 conn %default                                         
       ikelifetime=1440m                               
       keylife=60m      
@@ -135,27 +148,34 @@ conn b_a_hub
 conn b_a_sites               
       also=b_a_hub           
       rightsubnet=192.168.55.0/24
+```
 
-3) IPsec secrets
+**IPsec secrets**
 /etc/ipsec.secrets
+```js
 172.20.0.122 172.20.0.121 : PSK passw0rd
+```
 
-4) Run IPsec
-
-ipsec start
+**Run IPsec**
+```sh
+# ipsec start
+```
 
 ## Site_C (Branch) configuration
 
-ssh root@172.20.0.122
+**Login to machine**
+```sh
+$ ssh root@172.20.0.122
+```
 
-1) Configure Loopback IP address - local=left network:
-ifconfig lo:0 192.168.55.3 netmask 255.255.255.255 up
+**Configure Loopback IP address - local=left network:**
+```sh
+# ifconfig lo:0 192.168.55.3 netmask 255.255.255.255 up
+```
 
-2) IPsec configuration
+**IPsec configuration**
 /etc/ipsec.conf
-
-/etc/ipsec.conf
-============================================== 
+```js
 conn %default                                         
       ikelifetime=1440m                               
       keylife=60m      
@@ -179,18 +199,31 @@ conn c_a_hub
 conn c_b_sites               
       also=c_a_hub           
       rightsubnet=192.168.55.0/24
+```
 
-3) IPsec secrets
+**IPsec secrets**
 /etc/ipsec.secrets
+```js
 172.20.0.123 172.20.0.121 : PSK passw0rd
+```
 
-4) Run IPsec
+**Run IPsec**
+```sh
+# ipsec start
+```
 
-ipsec start
+## Verify 
+**Commands to run on any machine**
 
-## Verify
-ipsec statusall
-ipsec status
-
-show ip route table 220
-
+Check the status
+```sh
+# ipsec status
+```
+More details
+```sh
+# ipsec statusall
+```
+Check encryption domain routes
+```sh
+# show ip route table 220
+```
