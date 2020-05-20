@@ -8,7 +8,7 @@ Sandbox environment intended to be base environment for further development:
   - underlay network: 172.20.0.0/24 - eth0 interfaces
   - overlay network: IPsec
 
-## Diagram - underlay netwotk
+## Diagram - underlay network
 
                                    +---------------------+
                                    |site_A               |
