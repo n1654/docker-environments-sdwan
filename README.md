@@ -4,7 +4,7 @@ Sandbox environment intended to be base environment for further development:
   - site_A - HUB (headquarter)
   - site_B - branch (remote office)
   - site_C - branch (remote office)
-  - site_N - scalig-out (remote office)
+  - site_N - scaling-out (remote office)
   - underlay network: 172.20.0.0/24 - eth0 interfaces
   - overlay network: IPsec
 
