@@ -9,6 +9,7 @@ dev_var.add('subtenant', var_type='Customer')
 dev_var.add('namespace', var_type='String')
 dev_var.add('packet_size', var_type='Integer')
 dev_var.add('packet_count', var_type='Integer')
+dev_var.add('app_name', var_type='String')
 context = Variables.task_call(dev_var)
 
 device_id_list = []
@@ -24,6 +25,7 @@ for device in device_list:
     device_ip_list.append(Device(device_id=device['id']).management_address)
     
 context['device_ip_list'] = device_ip_list
+context['device_id_list'] = device_id_list
 
-ret = MSA_API.process_content('ENDED', f'workflow initialised {context}', context, True)
+ret = MSA_API.process_content('ENDED', f'workflow initialised {context["device_ip_list"]}', context, True)
 print(ret)
