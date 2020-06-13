@@ -1,3 +1,4 @@
+import json
 from msa_sdk.variables import Variables
 from msa_sdk.msa_api import MSA_API
 
@@ -15,11 +16,13 @@ ms_vars_dict = {"namespace": ,
                 }
 '''
 
-for ip in device_ip_list: 
+for ip in device_ip_list.values(): 
     ms_vars_dict = {"namespace": context['namespace'],
                     "pod_name": ip.replace(".", "-"),
                     "container_name": ip.replace(".", "-"),
-                    "remote_ip": ip
+                    "remote_ip": ip,
+                    "packet_size": context['packet_count'],
+                    "packet_count": context['packet_size']
                     }
     ms_vars_dict_list.append(ms_vars_dict)
     
